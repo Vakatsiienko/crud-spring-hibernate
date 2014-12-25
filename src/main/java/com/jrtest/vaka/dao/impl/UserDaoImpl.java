@@ -32,6 +32,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User update(int id, User entity) {
         entity.setId(id);
+        entity.setCreatedDate(em.find(User.class, id).getCreatedDate());
         return em.merge(entity);
     }
 
