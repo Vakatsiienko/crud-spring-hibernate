@@ -37,27 +37,35 @@ public abstract class CrudServiceTest<Entity extends BaseEntity> extends Service
         Assert.assertNotNull(read);
         Assert.assertEquals(read, created);
     }
-/*
+
     @Test
     public void testUpdate() {
-        Entity oldEntity = getDao().create(createEntity());
-        Entity newEntity = createEntity();
-        Entity updated = getDao().update(oldEntity.getId(), newEntity);
-
-        Assert.assertNotNull(updated);
-        Assert.assertEquals(newEntity, updated);
+        final Entity oldEntity = createEntity();
+        final Entity newEntity = createEntity();
+        Entity make = newEntity;
+        make.setCreatedDate(oldEntity.getCreatedDate());
+        final Entity entity = make;
+        final BaseDao<Entity> dao = getMockedDao();
+        new Expectations() {{
+            dao.update(oldEntity.getId(), newEntity);
+            returns(entity);
+        }};
+        Entity e = getService().update(oldEntity.getId(), newEntity);
+        Assert.assertEquals(e, entity);
     }
 
     @Test
     public void testDelete() {
-        Entity e = getDao().create(createEntity());
-
-        boolean deleted = getDao().delete(e.getId());
-        Assert.assertTrue(deleted);
-
-        Entity entity = getDao().read(e.getId());
-        Assert.assertNull(entity);
-    }*/
+        final BaseDao<Entity> dao = getMockedDao();
+        final Entity e = createEntity();
+        final boolean deleted = true;
+        new Expectations(){{
+            dao.delete(e.getId());
+            returns(deleted);
+        }};
+        boolean b = getService().delete(e.getId());
+        Assert.assertEquals(b, deleted);
+    }
 
     protected abstract CrudService<Entity> getService();
 
