@@ -27,15 +27,17 @@ import java.util.List;
         "com.jrtest.vaka.controller.*",
 })
 public class WebConfig extends WebMvcConfigurerAdapter {
-
+// Арбитр представлений который находит наш .jsp. По сути Арбитр переделывает логическое имя в реализацию интерфейса *.servlet.View
     @Bean
     public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        // определяем путь к шаблону
         viewResolver.setPrefix("/WEB-INF/views/");
         viewResolver.setSuffix(".jsp");
         return viewResolver;
     }
 
+    // регистрирует все контроллеры
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("home");

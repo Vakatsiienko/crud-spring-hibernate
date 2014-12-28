@@ -20,10 +20,10 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 public class User extends BaseEntity {
-    @Size(max = 45)
+    @Size(max = 50, min = 3, message = "Your name must be between 3 and 50 characters long")
     private String name;
-    @Min(0)
-    @Max(150)
+    @Min(value = 0, message = "Minimal age is 0")
+    @Max(value = 150, message = "Maximal age is 150")
     private int age;
     private boolean isAdmin;
 }
