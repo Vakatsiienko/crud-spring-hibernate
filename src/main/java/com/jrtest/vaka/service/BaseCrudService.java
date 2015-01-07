@@ -1,7 +1,10 @@
 package com.jrtest.vaka.service;
 
 import com.jrtest.vaka.dao.BaseDao;
+import com.jrtest.vaka.dao.Page;
 import com.jrtest.vaka.model.BaseEntity;
+
+import java.util.List;
 
 /**
  * @author Iaroslav
@@ -18,6 +21,11 @@ public abstract class BaseCrudService<Entity extends BaseEntity> implements Crud
     @Override
     public Entity read(int id) {
         return getDao().read(id);
+    }
+
+    @Override
+    public Page<Entity> readPage(int offset, int size) {
+        return getDao().readPage(offset, size);
     }
 
     @Override

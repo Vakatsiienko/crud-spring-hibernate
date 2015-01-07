@@ -34,7 +34,7 @@ public abstract class BaseCrudControllerTest<Entity extends BaseEntity> extends 
         ResponseEntity read = getController().read(1);
 
         Assert.assertNotNull(read);
-        Assert.assertEquals(read.content, created);
+        Assert.assertEquals(read.rows, created);
     }
 
     @Test
@@ -50,7 +50,7 @@ public abstract class BaseCrudControllerTest<Entity extends BaseEntity> extends 
             returns(entity);
         }};
         ResponseEntity<Entity> e = getController().update(oldEntity.getId(), newEntity);
-        Assert.assertEquals(e.content, entity);
+        Assert.assertEquals(e.rows, entity);
     }
 
     @Test
@@ -63,7 +63,7 @@ public abstract class BaseCrudControllerTest<Entity extends BaseEntity> extends 
             returns(deleted);
         }};
         ResponseEntity<Boolean> b = getController().delete(e.getId());
-        Assert.assertEquals(b.content, deleted);
+        Assert.assertEquals(b.rows, deleted);
     }
     protected abstract BaseCrudController<Entity> getController();
 

@@ -25,5 +25,5 @@ public class User extends BaseEntity {
     @Min(value = 0, message = "Minimal age is 0")
     @Max(value = 150, message = "Maximal age is 150")
     private int age;
-    private boolean isAdmin;
+    private boolean admin;
 }

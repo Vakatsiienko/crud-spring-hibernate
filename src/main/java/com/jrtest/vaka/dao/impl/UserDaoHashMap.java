@@ -1,9 +1,11 @@
 package com.jrtest.vaka.dao.impl;
 
+import com.jrtest.vaka.dao.Page;
 import com.jrtest.vaka.dao.UserDao;
 import com.jrtest.vaka.model.User;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,5 +40,10 @@ public class UserDaoHashMap implements UserDao {
     public boolean delete(int id) {
         User remove = users.remove(id);
         return remove != null;
+    }
+
+    @Override
+    public Page<User> readPage(int offset, int size) {
+        return null;
     }
 }

@@ -1,6 +1,9 @@
 package com.jrtest.vaka.service;
 
+import com.jrtest.vaka.dao.Page;
 import com.jrtest.vaka.model.BaseEntity;
+
+import java.util.List;
 
 /**
  * @author Iaroslav
@@ -14,4 +17,6 @@ public interface CrudService<Entity extends BaseEntity> {
     Entity update(int id, Entity entity);
 
     boolean delete(int id);
+
+    Page<Entity> readPage(int offset, int size);
 }

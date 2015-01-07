@@ -1,5 +1,6 @@
 package com.jrtest.vaka.dao.impl;
 
+import com.jrtest.vaka.dao.Page;
 import com.jrtest.vaka.dao.UserDao;
 import com.jrtest.vaka.model.User;
 import org.springframework.stereotype.Component;
@@ -7,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.List;
 
 /**
  * @author Iaroslav
@@ -32,7 +35,6 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User update(int id, User entity) {
         entity.setId(id);
-        entity.setCreatedDate(em.find(User.class, id).getCreatedDate());
         return em.merge(entity);
     }
 
@@ -45,5 +47,12 @@ public class UserDaoImpl implements UserDao {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public Page<User> readPage(int page, int size) {
+        List entities = em.createQuery("select u from User u").setMaxResults(size).setFirstResult((page - 1) * size).getResultList();
+        long total = (long) em.createQuery("select count(u) from User u").getSingleResult();
+        return new Page(entities, total);
     }
 }

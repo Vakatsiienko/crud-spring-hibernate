@@ -37,7 +37,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return viewResolver;
     }
 
-    // регистрирует все контроллеры
+    // регистрирует view контроллер
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("home");
@@ -48,6 +48,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         converters.add(jacksonHttpMessageConverter());
     }
 
+//Это контроллер спринг МВЦ принимающий запросы от клиента через диспатчерсервлет и преобразующий запросы в вызовы методов простого объекта
+//реализующего службу
     @Bean
     public MappingJackson2HttpMessageConverter jacksonHttpMessageConverter() {
         MappingJackson2HttpMessageConverter jacksonConverter = new MappingJackson2HttpMessageConverter();
