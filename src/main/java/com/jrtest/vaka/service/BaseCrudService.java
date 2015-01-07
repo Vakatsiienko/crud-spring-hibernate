@@ -3,6 +3,7 @@ package com.jrtest.vaka.service;
 import com.jrtest.vaka.dao.BaseDao;
 import com.jrtest.vaka.dao.Page;
 import com.jrtest.vaka.model.BaseEntity;
+import org.joda.time.LocalDateTime;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public abstract class BaseCrudService<Entity extends BaseEntity> implements Crud
 
     @Override
     public Entity create(Entity entity) {
+        entity.setCreatedDate(LocalDateTime.now());
         return getDao().create(entity);
     }
 
