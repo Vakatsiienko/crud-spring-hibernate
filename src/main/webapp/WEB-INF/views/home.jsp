@@ -87,7 +87,8 @@
                 json.rows[i].createdDate = j.toLocaleTimeString() + " " + j.toLocaleDateString();
             }
         }).dataTable({
-            columns: [
+            "dom": "<lftip>",
+            "columns": [
                 { data : "id" },
                 { data : "name" },
                 { data : "age" },
@@ -146,8 +147,8 @@
                             alert("some error")
                         }
                     },
-                    error: function(){
-                        console.log("ajax call for deleteUser error")
+                    "error": function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Some problems here: " + errorThrown);
                     }
                 }).done(function(){ // лoвим клик пo крестику или пoдлoжке
                     $('#udWindow')
@@ -181,8 +182,8 @@
                         alert("some error")
                     }
                 },
-                error: function(){
-                    console.log("ajax call for updateUser error")
+                "error": function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Some problems here: " + errorThrown);
                 }
             }).done(function(){
                 $('#udWindow')
@@ -210,13 +211,13 @@
                 data: user,
                 success: function (result) {
                     if (result.success) {
-                        alert("User successfully created with id #" + result.rows.id)	// reload the user data
+                        alert("User successfully created with id #" + result.rows.id)
                     } else {
                         alert("some error")
                     }
                 },
-                error: function(){
-                    console.log("ajax call for createUser error")
+                "error": function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Some problems here: " + errorThrown);
                 }
             }).done(function(){
                 $('#udWindow')
@@ -229,6 +230,15 @@
                 table._fnAjaxUpdate();//refresh DT
             });
             console.log("akol' beseder")
+        }
+    }
+    function validateForm()
+    {
+        var x= document.forms["myForm"]["fname"].value;
+        if (x==null || x=="")
+        {
+            alert("Имя должно быть обязательно введено");
+            return false;
         }
     }
 
@@ -244,17 +254,18 @@
         <th>Created Date</th>
     </tr>
     </thead>
+    <div class = "manual">To edit or delete user just click on his row.</div>
 </table></div>
 <div id="addWindow"  style="width:400px;height:280px;padding:10px 20px">
     <div class="ftitle">User Information</div>
     <form id="addForm">
         <div class="fitem">
             <label>Name:</label>
-            <input name="name" required="true">
+            <input name="name" required>
         </div>
         <div class="fitem">
             <label>Age:</label>
-            <input name="age" required="true">
+            <input name="age" type="number" required min=0 max=150>
         </div>
         <div class="fitem">
             <label>Permissions:</label>
@@ -280,11 +291,11 @@
         </div>
         <div class="fitem">
             <label>Name:</label>
-            <input id = "usersName" name="name">
+            <input id = "usersName" name="name" required>
         </div>
         <div class="fitem">
             <label>Age:</label>
-            <input id = "usersAge" name="age">
+            <input id = "usersAge" name="age" type = "number" required min=0 max=150>
         </div>
         <div class="fitem">
             <label>Permissions:</label>
@@ -306,6 +317,7 @@
         </div>
     </form>
 </div>
+
 <div id="overlay"></div>
 </body>
 </html>
