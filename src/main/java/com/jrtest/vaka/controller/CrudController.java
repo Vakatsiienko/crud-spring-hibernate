@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 /**
  * @author Iaroslav
@@ -25,7 +23,7 @@ public interface CrudController<Entity extends BaseEntity> {
     @RequestMapping("{id}")
     ResponseEntity<Entity> read(@PathVariable("id") int id);
 
-    @RequestMapping
+    @RequestMapping(method = GET)
     ResponseEntity<List<Entity>> readPage(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "rows", defaultValue = "20") int rows);
 
     @RequestMapping(value = "{id}", method = PUT)

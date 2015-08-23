@@ -30,9 +30,9 @@ public abstract class BaseCrudController<Entity extends BaseEntity> implements C
     }
 
     @Override
-    public ResponseEntity<List<Entity>> readPage(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "rows", defaultValue = "20") int rows) {
+    public ResponseEntity<List<Entity>> readPage(@RequestParam(value = "page", defaultValue = "100") int page, @RequestParam(value = "rows", defaultValue = "20") int rows) {
         Page<Entity> res = getService().readPage(page, rows);
-        return new ResponseEntity<>(res.getContent(), res.getTotal());
+        return new ResponseEntity<>(res.getContent(), res.getLength());
     }
 
     @Override

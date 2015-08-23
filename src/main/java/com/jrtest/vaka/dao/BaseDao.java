@@ -19,4 +19,5 @@ public interface BaseDao<T extends BaseEntity> {
     boolean delete(int id);
 
     Page<T> readPage(int offset, int size);
+
 }

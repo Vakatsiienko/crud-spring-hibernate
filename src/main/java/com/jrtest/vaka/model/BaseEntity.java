@@ -4,13 +4,13 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.joda.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import java.sql.Timestamp;
 
 /**
  * @author Iaroslav
@@ -27,5 +27,5 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(updatable = false)
-    private LocalDateTime createdDate;
+    private Timestamp createdDate;
 }

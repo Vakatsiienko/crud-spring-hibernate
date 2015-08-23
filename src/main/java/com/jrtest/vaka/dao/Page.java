@@ -13,5 +13,5 @@ import java.util.List;
 @Getter
 public class Page<T> {
     private List<T> content;
-    private long total;
+    private long length;
 }

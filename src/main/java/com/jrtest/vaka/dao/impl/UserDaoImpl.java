@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.List;
 
 /**
@@ -51,8 +50,10 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Page<User> readPage(int page, int size) {
-        List entities = em.createQuery("select u from User u").setMaxResults(size).setFirstResult((page - 1) * size).getResultList();
-        long total = (long) em.createQuery("select count(u) from User u").getSingleResult();
-        return new Page(entities, total);
+        List entities = em.createQuery("select u from User u").getResultList();
+        long length = (long) em.createQuery("select count(u) from User u").getSingleResult();
+        return new Page(entities, length);
     }
+
+
 }
