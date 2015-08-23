@@ -9,6 +9,9 @@ import mockit.Mocked;
 import mockit.Tested;
 import org.joda.time.LocalDateTime;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+
 /**
  * @author Iaroslav
  * @since 27.12.2014 16:58
@@ -34,7 +37,7 @@ public class UserControllerTest extends BaseCrudControllerTest<User> {
         User user = new User();
         user.setName("Vaka");
         user.setAge((int) (Math.random() * 150));
-        user.setCreatedDate(LocalDateTime.now().withMillisOfSecond(0));
+        user.setCreatedDate(Timestamp.from(Instant.now()));
         return user;
     }
 

@@ -4,6 +4,8 @@ import com.jrtest.vaka.model.User;
 import org.joda.time.LocalDateTime;
 
 import javax.inject.Inject;
+import java.sql.Timestamp;
+import java.time.Instant;
 
 /**
  * @author Iaroslav
@@ -23,7 +25,7 @@ public class UserDaoImplTest extends BaseDaoTest<User> {
         User user = new User();
         user.setName("Vaka");
         user.setAge((int) (Math.random() * 150));
-        user.setCreatedDate(LocalDateTime.now().withMillisOfSecond(0));
+        user.setCreatedDate(Timestamp.from(Instant.now()));
         return user;
     }
 

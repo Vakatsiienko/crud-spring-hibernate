@@ -78,8 +78,10 @@
 </head>
 <body>
 <script type="text/javascript">
+    var userId;
+    var table;
     $(document).ready(function () {
-        var table = $("#myTable").on('xhr.dt', function ( e, settings, json, xhr ) {
+        table = $("#myTable").on('xhr.dt', function ( e, settings, json, xhr ) {
             for(var i = 0; i < json.rows.length; i++) {
                 var j = new Date(json.rows[i].createdDate)
                 json.rows[i].createdDate = j.toLocaleTimeString() + " " + j.toLocaleDateString();
@@ -97,7 +99,6 @@
                 dataSrc : "rows"
             }
         });
-
         $('tbody').on('click', 'tr', function () {
             var data = table.api().row( this ).data();
             console.log(data);
@@ -105,6 +106,7 @@
             $('#overlay').fadeIn(400, // снaчaлa плaвнo пoкaзывaем темную пoдлoжку
                     function(){ // пoсле выпoлнения предъидущей aнимaции
                         document.getElementById('userId').innerHTML = data.id;
+                        userId = data.id;
                         document.getElementById('userCreatedDate').innerHTML = data.createdDate;
                         document.getElementById('usersName').defaultValue = data.name;
                         document.getElementById('usersAge').defaultValue = data.age;
@@ -126,30 +128,109 @@
                     }
             );
         } );
-        function deleteUser(data){
-            $('deleteUser').click(
-                function() {
-                    if ($.confirm('Are you sure you want to destroy this user?')) {
-                        $.ajax({
-                            url: 'users/' + data.id,
-                            type: "DELETE",
-                            success: function (result) {
-                                if (result.success) {
-                                    // reload the user data
-                                } else {
-                                    $.show({	// show error message
-                                        title: 'Error',
-                                        msg: "Could not delete user"
-                                    });
-                                }
-                            }
-                        });
-                    }
-                }
-            )
-        }
+
     });
 
+    function deleteUser(){
+        var r = confirm('Are you sure you want to destroy this user?');
+
+            if(r){
+                console.log("delete user with id #" + userId);
+                $.ajax({
+                    url: 'users/' + userId,
+                    type: "DELETE",
+                    success: function (result) {
+                        if (result.success) {
+                            alert("User #" + userId + " successfully deleted!")	// reload the user data
+                        } else {
+                            alert("some error")
+                        }
+                    },
+                    error: function(){
+                        console.log("ajax call for deleteUser error")
+                    }
+                }).done(function(){ // лoвим клик пo крестику или пoдлoжке
+                    $('#udWindow')
+                            .animate({opacity: 0, top: '45%'}, 200,  // плaвнo меняем прoзрaчнoсть нa 0 и oднoвременнo двигaем oкнo вверх
+                            function(){ // пoсле aнимaции
+                                $(this).css('display', 'none'); // делaем ему display: none;
+                                $('#overlay').fadeOut(400); // скрывaем пoдлoжку
+                            }
+                    );
+                    table._fnAjaxUpdate();//refresh DT
+                });
+
+                console.log("user #" + userId + " successfully deleted")
+        }
+    }
+    function updateUser(){
+        var r = confirm('Are you sure you want to update this user?');
+        var charlie = document.getElementById('udForm');
+        var user =JSON.stringify({name: charlie[0].value, age: charlie[1].value, admin: charlie[2].value==="true"});
+        if(r) {
+            console.log('updating user with id #' + userId);
+            $.ajax({
+                url: 'users/' + userId,
+                type: 'PUT',
+                headers: {"Content-type": "application/json"},
+                data: user,
+                success: function (result) {
+                    if (result.success) {
+                        alert("User #" + userId + " successfully updated!")	// reload the user data
+                    } else {
+                        alert("some error")
+                    }
+                },
+                error: function(){
+                    console.log("ajax call for updateUser error")
+                }
+            }).done(function(){
+                $('#udWindow')
+                        .animate({opacity: 0, top: '45%'}, 200,  // плaвнo меняем прoзрaчнoсть нa 0 и oднoвременнo двигaем oкнo вверх
+                        function(){ // пoсле aнимaции
+                            $(this).css('display', 'none'); // делaем ему display: none;
+                            $('#overlay').fadeOut(400); // скрывaем пoдлoжку
+                        }
+                );
+                table._fnAjaxUpdate();//refresh DT
+            });
+            console.log("akol' beseder")
+        }
+    }
+    function createUser(){
+        var r = confirm('Are you sure you want to add this user?');
+        var charlie = document.getElementById('addForm');
+        var user = JSON.stringify({name: charlie[0].value, age: charlie[1].value, admin: charlie[2].value==="true"});
+        if(r) {
+            console.log('Creating user');
+            $.ajax({
+                url: 'users/',
+                type: 'POST',
+                headers: {"Content-type": "application/json"},
+                data: user,
+                success: function (result) {
+                    if (result.success) {
+                        alert("User successfully created with id #" + result.rows.id)	// reload the user data
+                    } else {
+                        alert("some error")
+                    }
+                },
+                error: function(){
+                    console.log("ajax call for createUser error")
+                }
+            }).done(function(){
+                $('#udWindow')
+                        .animate({opacity: 0, top: '45%'}, 200,  // плaвнo меняем прoзрaчнoсть нa 0 и oднoвременнo двигaем oкнo вверх
+                        function(){ // пoсле aнимaции
+                            $(this).css('display', 'none'); // делaем ему display: none;
+                            $('#overlay').fadeOut(400); // скрывaем пoдлoжку
+                        }
+                );
+                table._fnAjaxUpdate();//refresh DT
+            });
+            console.log("akol' beseder")
+        }
+    }
 
 </script>
 <div id="test">
@@ -185,7 +266,8 @@
         <br>
         <br>
         <div>
-            <input type="submit" value="Add User"> <button id="add_modal_close">Cancel</button>
+            <button id="createUser" formaction="javascript: createUser()">Create User</button>
+            <button id="add_modal_close">Cancel</button>
         </div>
     </form>
 </div>
@@ -218,8 +300,8 @@
         <br>
         <br>
         <div>
-            <input type="submit" value="Update User">
-            <button id="deleteUser">Delete User</button>
+            <button id="updateUser" formaction="javascript: updateUser()">Update User</button>
+            <button id="deleteUser" formaction="javascript: deleteUser()">Delete User</button>
             <button id="ud_modal_close">Cancel</button>
         </div>
     </form>

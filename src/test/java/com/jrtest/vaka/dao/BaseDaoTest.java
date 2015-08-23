@@ -2,7 +2,6 @@ package com.jrtest.vaka.dao;
 
 import com.jrtest.vaka.PersistenceTest;
 import com.jrtest.vaka.model.BaseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
