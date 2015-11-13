@@ -25,7 +25,9 @@ public class UserDaoImplTest extends BaseDaoTest<User> {
         User user = new User();
         user.setName("Vaka");
         user.setAge((int) (Math.random() * 150));
-        user.setCreatedDate(Timestamp.from(Instant.now()));
+        Timestamp time = Timestamp.from(Instant.now());
+        time.setNanos(0);
+        user.setCreatedDate(time);
         return user;
     }
 
