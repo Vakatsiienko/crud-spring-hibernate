@@ -1,6 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="exploded-war" name="jrTest">
-    <output-path>$PROJECT_DIR$/out/artifacts/jrTest</output-path>
-    <root id="root" />
-  </artifact>
-</component>
