@@ -3,8 +3,6 @@ package com.jrtest.vaka.controller;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Collection;
-import java.util.List;
 
 /**
  * @author Iaroslav

@@ -27,23 +27,17 @@ public class WebInitializer implements WebApplicationInitializer {
         encodingFilter.addMappingForUrlPatterns(null, true, "/*");
     }
 
-//ContextLoaderListener - сервлет загружающий конфигурационные фалы в контекст приложения спринг, созданный контроллером
-//DispatcherServlet. Т.е. это сервлет работающий при старте приложения, который загружает по указаным конфигам из AnnotationConfigWebApplicationContext
-//все наши контроллеры-сервисы-дао в контейнер. В нашем случае создает контекст(контейнер) с дао и сервисами по их конфигам.
     private void registerListener(ServletContext servletContext) {
         AnnotationConfigWebApplicationContext applicationContext = createContext(PersistenceConfig.class, ServiceConfig.class);
         ContextLoaderListener contextLoaderListener = new ContextLoaderListener(applicationContext);
         servletContext.addListener(contextLoaderListener);
     }
-//DispatcherServlet - "форматирует" ответ контроллера(логическое имя) в ответ для томкэта(сервера) с помощью арбитра представлений
-//(InternalResourceViewResolver), который представляет этот ответ для пользователя(браузера) в графическом виде.
     private void registerDispatcherServlet(ServletContext servletContext) {
         AnnotationConfigWebApplicationContext dispatcherContext = createContext(WebConfig.class);
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcherServlet", new DispatcherServlet(dispatcherContext));
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
     }
-//Служит для загрузки конфигов в контекст
     private AnnotationConfigWebApplicationContext createContext(final Class<?>... configClasses) {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
         context.register(configClasses);
