@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -14,7 +15,7 @@ import javax.validation.constraints.Size;
  * @author Iaroslav
  * @since 20.12.2014 15:34
  */
-@Entity
+@Entity(name = "user")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Getter

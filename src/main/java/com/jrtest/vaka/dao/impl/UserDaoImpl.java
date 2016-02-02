@@ -50,8 +50,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Page<User> readPage(int page, int size) {
-        List entities = em.createQuery("select u from User u").getResultList();
-        long length = (long) em.createQuery("select count(u) from User u").getSingleResult();
+        List entities = em.createQuery("select u from user u").getResultList();
+        long length = (long) em.createQuery("select count(u) from user u").getSingleResult();
         return new Page(entities, length);
     }
 
