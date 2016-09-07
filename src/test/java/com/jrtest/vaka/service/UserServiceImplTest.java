@@ -20,6 +20,7 @@ import java.time.Instant;
 public class UserServiceImplTest extends CrudServiceTest<User> {
     @Tested
     private UserServiceImpl userService;
+
     @Injectable
     @Mocked
     private UserDao userDao;
