@@ -1,4 +1,4 @@
-CREATE DATABASE test_crud;
+CREATE DATABASE IF NOT EXISTS test_crud;
 USE test_crud;
 DROP TABLE IF EXISTS user;
 CREATE TABLE user
